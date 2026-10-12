@@ -1,0 +1,14 @@
+{
+  "name": "outlook-fso-report-web",
+  "version": "1.0.0",
+  "description": "Report Email to FSO – Outlook web add-in for New Outlook",
+  "scripts": {
+    "start": "npx http-server -p 3000 -c-1 --cors",
+    "start:https": "npx http-server -p 3000 -c-1 --cors -S -C cert.pem -K key.pem"
+  },
+  "author": "Tracewell",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

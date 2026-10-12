@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+  xsi:type="MailApp">
+
+  <!-- Begin Basic Settings: Add-in metadata, used for all versions of Office unless override provided. -->
+  <Id>a1b2c3d4-e5f6-7890-abcd-ef1234567890</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Tracewell FSO</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Report Email to FSO"/>
+  <Description DefaultValue="Report the selected email to the FSO team (jrviar@tracewell.com). Works in New Outlook, Outlook on the web, and classic Outlook."/>
+  <IconUrl DefaultValue="https://jrviar2-twell.github.io/outlook-fso-report/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://jrviar2-twell.github.io/outlook-fso-report/assets/icon-80.png"/>
+  <SupportUrl DefaultValue="https://www.tracewell.com"/>
+  <AppDomains>
+    <AppDomain>https://jrviar2-twell.github.io/outlook-fso-report</AppDomain>
+  </AppDomains>
+
+  <!-- Hosts this add-in supports. -->
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+
+  <!-- Mailbox requirement set. -->
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.5"/>
+    </Sets>
+  </Requirements>
+
+  <!-- Form factor. Currently only DesktopFormFactor is supported. -->
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://jrviar2-twell.github.io/outlook-fso-report/src/commands/commands.html"/>
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <Permissions>ReadItem</Permissions>
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  </Rule>
+  <DisableEntityHighlighting>true</DisableEntityHighlighting>
+
+  <!-- Version Overrides go here for Outlook 2016+ / New Outlook / OWA -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.5">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </Requirements>
+
+    <Hosts>
+      <Host xsi:type="MailHost">
+
+        <DesktopFormFactor>
+          <!-- Function file is a HTML page that includes the JavaScript for function commands. -->
+          <FunctionFile resid="Commands.Url"/>
+
+          <!-- Message Read -->
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="msgReadGroup">
+                <Label resid="GroupLabel"/>
+                <Control xsi:type="Button" id="reportEmailButton">
+                  <Label resid="ReportButton.Label"/>
+                  <Supertip>
+                    <Title resid="ReportButton.Label"/>
+                    <Description resid="ReportButton.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16"/>
+                    <bt:Image size="32" resid="Icon.32"/>
+                    <bt:Image size="80" resid="Icon.80"/>
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>reportEmailToFSO</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16" DefaultValue="https://jrviar2-twell.github.io/outlook-fso-report/assets/icon-16.png"/>
+        <bt:Image id="Icon.32" DefaultValue="https://jrviar2-twell.github.io/outlook-fso-report/assets/icon-32.png"/>
+        <bt:Image id="Icon.80" DefaultValue="https://jrviar2-twell.github.io/outlook-fso-report/assets/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Commands.Url" DefaultValue="https://jrviar2-twell.github.io/outlook-fso-report/src/commands/commands.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GroupLabel" DefaultValue="FSO Report"/>
+        <bt:String id="ReportButton.Label" DefaultValue="Report Email to FSO"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="ReportButton.Tooltip" DefaultValue="Report the selected email to the FSO team (jrviar@tracewell.com) as an attachment."/>
+      </bt:LongStrings>
+    </Resources>
+
+    <!-- VersionOverridesV1_1 for additional features if needed later -->
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+      <Requirements>
+        <bt:Sets DefaultMinVersion="1.5">
+          <bt:Set Name="Mailbox"/>
+        </bt:Sets>
+      </Requirements>
+      <Hosts>
+        <Host xsi:type="MailHost">
+          <DesktopFormFactor>
+            <FunctionFile resid="Commands.Url"/>
+            <ExtensionPoint xsi:type="MessageReadCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="msgReadGroup">
+                  <Label resid="GroupLabel"/>
+                  <Control xsi:type="Button" id="reportEmailButton">
+                    <Label resid="ReportButton.Label"/>
+                    <Supertip>
+                      <Title resid="ReportButton.Label"/>
+                      <Description resid="ReportButton.Tooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16"/>
+                      <bt:Image size="32" resid="Icon.32"/>
+                      <bt:Image size="80" resid="Icon.80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>reportEmailToFSO</FunctionName>
+                    </Action>
+                  </Control>
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+          </DesktopFormFactor>
+        </Host>
+      </Hosts>
+      <Resources>
+        <bt:Images>
+          <bt:Image id="Icon.16" DefaultValue="https://jrviar2-twell.github.io/outlook-fso-report/assets/icon-16.png"/>
+          <bt:Image id="Icon.32" DefaultValue="https://jrviar2-twell.github.io/outlook-fso-report/assets/icon-32.png"/>
+          <bt:Image id="Icon.80" DefaultValue="https://jrviar2-twell.github.io/outlook-fso-report/assets/icon-80.png"/>
+        </bt:Images>
+        <bt:Urls>
+          <bt:Url id="Commands.Url" DefaultValue="https://jrviar2-twell.github.io/outlook-fso-report/src/commands/commands.html"/>
+        </bt:Urls>
+        <bt:ShortStrings>
+          <bt:String id="GroupLabel" DefaultValue="FSO Report"/>
+          <bt:String id="ReportButton.Label" DefaultValue="Report Email to FSO"/>
+        </bt:ShortStrings>
+        <bt:LongStrings>
+          <bt:String id="ReportButton.Tooltip" DefaultValue="Report the selected email to the FSO team (jrviar@tracewell.com) as an attachment."/>
+        </bt:LongStrings>
+      </Resources>
+    </VersionOverrides>
+  </VersionOverrides>
+</OfficeApp>
